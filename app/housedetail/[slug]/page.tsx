@@ -22,13 +22,13 @@ export default function Page({ params }: { params: { slug?: string } }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${process.env.BASE_URL}/api/getPostOne`, {
+        const res = await fetch(`/api/getPostOne`, {
           method: "POST",
           body: JSON.stringify({ id: params.slug }),
         });
         const dataRaw = await res.json();
 
-        const resImage = await fetch(`${process.env.BASE_URL}/api/getImages`, {
+        const resImage = await fetch(`/api/getImages`, {
           method: "POST",
           body: JSON.stringify({ id: dataRaw.MLS }),
         });

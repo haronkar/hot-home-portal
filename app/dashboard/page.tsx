@@ -10,7 +10,7 @@ export default function dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${process.env.BASE_URL}/api/getPostAll`);
+        const res = await fetch(`/api/getPostAll`);
         const dataRaw = await res.json();
 
         setData(dataRaw);

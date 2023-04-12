@@ -11,7 +11,7 @@ type PageProps = {
 
 export default async function CreateListing({ searchParams }: PageProps) {
   async function getPost() {
-    const res = await fetch(`${process.env.BASE_URL}/api/getPostOne`, {
+    const res = await fetch(`/api/getPostOne`, {
       method: "POST",
       body: JSON.stringify({ id: searchParams?.pid }),
     });
