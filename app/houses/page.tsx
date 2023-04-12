@@ -26,7 +26,7 @@ type HomeTypeProps = "Townhouse" | "Villa" | "Condominium";
 export default function Houses({
   searchParams,
 }: {
-  searchParams: { city: string };
+  searchParams?: { city?: string };
 }) {
   const [city, setCity] = useState("");
   const [minPrice, setMinPrice] = useState(0);
@@ -34,7 +34,7 @@ export default function Houses({
   const [selectedTypes, setSelectedTypes] = useState<HomeTypeProps[]>([]);
   const [gallery, setGallery] = useState<Gallery[]>([]);
 
-  const cityFilter = searchParams.city; // or an empty string if no filter
+  const cityFilter = searchParams?.city; // or an empty string if no filter
   const bed = ""; // or an empty string if no filter
   const bath = "";
 
