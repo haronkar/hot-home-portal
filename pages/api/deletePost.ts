@@ -11,7 +11,7 @@ export default async function handler(
 
     const data = await deleteDoc(doc(db, "message", post.listingId));
 
-    return res.status(200);
+    return res.status(200).json("");
   } catch (error) {
     return res.status(500).json(error);
   }

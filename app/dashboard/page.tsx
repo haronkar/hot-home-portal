@@ -1,15 +1,25 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import DashList from "./dashlist";
 
-export default async function dashboard() {
-  async function getPost() {
-    const res = await fetch(`${process.env.BASE_URL}/api/getPostAll`);
-    if (!res.ok) {
-      console.log("not ok");
-    }
-    return res.json();
-  }
-  const data = await getPost();
+export default function dashboard() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`${process.env.BASE_URL}/api/getPostAll`);
+        const dataRaw = await res.json();
+
+        setData(dataRaw);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div>

@@ -1,3 +1,5 @@
+"use client";
+
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -5,33 +7,42 @@ import Link from "next/link";
 
 import Map from "@/app/(components)/map";
 import Footer from "@/app/(components)/footer";
+import { useEffect, useState } from "react";
+import { DocumentData } from "firebase/firestore";
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  async function getPost() {
-    const res = await fetch(`${process.env.BASE_URL}/api/getPostOne`, {
-      method: "POST",
-      body: JSON.stringify({ id: params.slug }),
-    });
-    if (!res.ok) {
-      console.log("not ok");
-    }
-    return res.json();
-  }
+type PageProps = {
+  id: string;
+  url: string;
+};
 
-  const data = await getPost();
+export default function Page({ params }: { params: { slug?: string } }) {
+  const [data, setData] = useState<DocumentData>();
+  const [images, setImages] = useState<PageProps[]>([]);
 
-  async function getImages() {
-    const res = await fetch(`${process.env.BASE_URL}/api/getImages`, {
-      method: "POST",
-      body: JSON.stringify({ id: data.MLS }),
-    });
-    if (!res.ok) {
-      console.log("not ok");
-    }
-    return res.json();
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`${process.env.BASE_URL}/api/getPostOne`, {
+          method: "POST",
+          body: JSON.stringify({ id: params.slug }),
+        });
+        const dataRaw = await res.json();
 
-  const images = await getImages();
+        const resImage = await fetch(`${process.env.BASE_URL}/api/getImages`, {
+          method: "POST",
+          body: JSON.stringify({ id: dataRaw.MLS }),
+        });
+
+        const rawImages = await resImage.json();
+
+        setData(dataRaw);
+        setImages(rawImages);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="">
@@ -65,14 +76,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
           <div className="">
             <h2 className="text-4xl font-medium tracking-wide mt-10">
-              {data.Address}
+              {data?.Address}
             </h2>
-            <h2 className=" text-xl opacity-70 mt-3">{data.City}</h2>
+            <h2 className=" text-xl opacity-70 mt-3">{data?.City}</h2>
           </div>
           <div className="absolute right-14 -bottom-48 bg-foreground p-10 w-fit border-4 border-background rounded-2xl">
             <h2 className="text-background/50 text-sm">PRICE</h2>
             <h1 className="text-3xl">
-              CAD {parseInt(data.Price).toLocaleString()}
+              CAD {parseInt(data?.Price).toLocaleString()}
             </h1>
             <div className="mt-7 px-4 py-2 bg-accentColor rounded-xl">
               <h2 className="text-foreground/50 uppercase text-xs">
@@ -94,7 +105,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <h1 className="text-4xl ">About This Home</h1>
 
           <h2 className=" mt-5 leading-loose font-light w-1/2">
-            {data.Description}
+            {data?.Description}
           </h2>
         </div>
 
@@ -103,23 +114,23 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <div className="grid grid-cols-3 gap-y-10 w-5/6">
             <div className="text-lg">
               <h1 className="text-foreground/50">{"Property Type"}</h1>
-              <h2 className="font-medium mt-2">{data.Type}</h2>
+              <h2 className="font-medium mt-2">{data?.Type}</h2>
             </div>
             <div className="text-lg">
               <h1 className="text-foreground/50">{"Bed/Bath"}</h1>
-              <h2 className="font-medium mt-2">{`${data.Bed}/${data.Bath}`}</h2>
+              <h2 className="font-medium mt-2">{`${data?.Bed}/${data?.Bath}`}</h2>
             </div>
             <div className="text-lg">
               <h1 className="text-foreground/50">{"MLS#"}</h1>
-              <h2 className="font-medium mt-2">{data.MLS}</h2>
+              <h2 className="font-medium mt-2">{data?.MLS}</h2>
             </div>
             <div className="text-lg">
               <h1 className="text-foreground/50">{"Flooring"}</h1>
-              <h2 className="font-medium mt-2">{data.Flooring}</h2>
+              <h2 className="font-medium mt-2">{data?.Flooring}</h2>
             </div>
             <div className="text-lg">
               <h1 className="text-foreground/50">{"Year Built"}</h1>
-              <h2 className="font-medium mt-2">{data.Year_Built}</h2>
+              <h2 className="font-medium mt-2">{data?.Year_Built}</h2>
             </div>
             <div className="text-lg">
               <h1 className="text-foreground/50">{"Time on HotHome"}</h1>
@@ -133,27 +144,27 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <div className="grid grid-cols-3 gap-y-10 w-3/4 m-auto pb-20">
             <div className="text-lg rounded-2xl">
               <h1 className="text-background/50">{"Cooling"}</h1>
-              <h2 className="font-medium mt-2">{data.Cooling}</h2>
+              <h2 className="font-medium mt-2">{data?.Cooling}</h2>
             </div>
             <div className="text-lg rounded-2xl">
               <h1 className="text-background/50">{"Heating"}</h1>
-              <h2 className="font-medium mt-2">{data.Heating}</h2>
+              <h2 className="font-medium mt-2">{data?.Heating}</h2>
             </div>
             <div className="text-lg rounded-2xl">
               <h1 className="text-background/50">{"Appliances"}</h1>
-              <h2 className="font-medium mt-2">{data.Appliances}</h2>
+              <h2 className="font-medium mt-2">{data?.Appliances}</h2>
             </div>
             <div className="text-lg rounded-2xl">
               <h1 className="text-background/50">{"Parking"}</h1>
-              <h2 className="font-medium mt-2">{data.Parking}</h2>
+              <h2 className="font-medium mt-2">{data?.Parking}</h2>
             </div>
             <div className="text-lg rounded-2xl">
               <h1 className="text-background/50">{"Basement"}</h1>
-              <h2 className="font-medium mt-2">{data.Basement}</h2>
+              <h2 className="font-medium mt-2">{data?.Basement}</h2>
             </div>
             <div className="text-lg rounded-2xl">
               <h1 className="text-background/50">{"Lot Size"}</h1>
-              <h2 className="font-medium mt-2">{`${data.Lot} sqft`}</h2>
+              <h2 className="font-medium mt-2">{`${data?.Lot} sqft`}</h2>
             </div>
           </div>
 
