@@ -10,7 +10,7 @@ import { ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/firebase/clientApp";
 import ImageUploader from "@/app/(components)/(form)/imageUploader";
 
-export default function FormPost(props: { pid: string; data: DocumentData }) {
+export default function FormPost(props: { id?: string; data: DocumentData }) {
   const [price, setPrice] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -33,7 +33,7 @@ export default function FormPost(props: { pid: string; data: DocumentData }) {
   const [images, setImages] = useState<string[]>([]);
 
   const router = useRouter();
-  const docId = props.pid;
+  const docId = props.id;
   const docData = props.data;
 
   const addSuccess = () =>

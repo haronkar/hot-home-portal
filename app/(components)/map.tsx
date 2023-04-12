@@ -26,9 +26,7 @@ const options = {
 const Map: React.FC<{ address: string }> = ({ address }) => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey:
-      process.env.REACT_APP_GOOGLE_MAPS_API_KEY ||
-      "AIzaSyDMuQfUpvz761OqWmwvxZ2a3EYAPrMBf-E",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "",
   });
 
   const [position, setPosition] = useState(center);

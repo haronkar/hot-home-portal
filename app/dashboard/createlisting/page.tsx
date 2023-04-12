@@ -3,15 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import FormPost from "./form";
 
-export default async function CreateListing({
-  searchParams,
-}: {
-  searchParams: { pid: string };
-}) {
+type PageProps = {
+  searchParams?: {
+    pid?: string;
+  };
+};
+
+export default async function CreateListing({ searchParams }: PageProps) {
   async function getPost() {
     const res = await fetch(`${process.env.BASE_URL}/api/getPostOne`, {
       method: "POST",
-      body: JSON.stringify({ id: searchParams.pid }),
+      body: JSON.stringify({ id: searchParams?.pid }),
     });
     if (!res.ok) {
       console.log("not ok");
@@ -19,7 +21,7 @@ export default async function CreateListing({
     return res.json();
   }
   let data = {};
-  if (searchParams.pid) {
+  if (searchParams?.pid) {
     data = await getPost();
   }
 
@@ -33,7 +35,7 @@ export default async function CreateListing({
           <FontAwesomeIcon icon={faCaretLeft} /> Dashboard
         </Link>
         <div className="pt-10 flex justify-start md:justify-center w-full">
-          <FormPost pid={searchParams.pid} data={data} />
+          <FormPost id={searchParams?.pid} data={data} />
         </div>
       </section>
     </div>
