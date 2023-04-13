@@ -1,6 +1,10 @@
+"use client";
+
 import { faCaretLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { DocumentData } from "firebase/firestore";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import FormPost from "./form";
 
 type PageProps = {
@@ -9,21 +13,42 @@ type PageProps = {
   };
 };
 
-export default async function CreateListing({ searchParams }: PageProps) {
-  async function getPost() {
-    const res = await fetch(`${process.env.BASE_URL}/api/getPostOne`, {
-      method: "POST",
-      body: JSON.stringify({ id: searchParams?.pid }),
-    });
-    if (!res.ok) {
-      console.log("not ok");
-    }
-    return res.json();
-  }
-  let data = {};
-  if (searchParams?.pid) {
-    data = await getPost();
-  }
+export default function CreateListing({ searchParams }: PageProps) {
+  const [data, setData] = useState<DocumentData>({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`${process.env.BASE_URL}/api/getPostOne`, {
+          method: "POST",
+          body: JSON.stringify({ id: searchParams?.pid }),
+        });
+        const dataRaw = await res.json();
+
+        setData(dataRaw);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // console.log(data);
+
+  // async function getPost() {
+  //   const res = await fetch(`${process.env.BASE_URL}/api/getPostOne`, {
+  //     method: "POST",
+  //     body: JSON.stringify({ id: searchParams?.pid }),
+  //   });
+  //   if (!res.ok) {
+  //     console.log("not ok");
+  //   }
+  //   return res.json();
+  // }
+  // let data = {};
+  // if (searchParams?.pid) {
+  //   data = await getPost();
+  // }
 
   return (
     <div>

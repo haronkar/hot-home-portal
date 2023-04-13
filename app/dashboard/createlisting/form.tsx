@@ -77,7 +77,7 @@ export default function FormPost(props: { id?: string; data: DocumentData }) {
       setYearBuilt(docData.Year_Built);
       setDescription(docData.Description);
     }
-  }, []);
+  }, [docData]);
 
   const hangleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = event.target.files;
