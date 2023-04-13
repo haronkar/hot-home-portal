@@ -19,7 +19,7 @@ export default function CreateListing({ searchParams }: PageProps) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${process.env.BASE_URL}/api/getPostOne`, {
+        const res = await fetch(`/api/getPostOne`, {
           method: "POST",
           body: JSON.stringify({ id: searchParams?.pid }),
         });
@@ -32,23 +32,6 @@ export default function CreateListing({ searchParams }: PageProps) {
     };
     fetchData();
   }, []);
-
-  // console.log(data);
-
-  // async function getPost() {
-  //   const res = await fetch(`${process.env.BASE_URL}/api/getPostOne`, {
-  //     method: "POST",
-  //     body: JSON.stringify({ id: searchParams?.pid }),
-  //   });
-  //   if (!res.ok) {
-  //     console.log("not ok");
-  //   }
-  //   return res.json();
-  // }
-  // let data = {};
-  // if (searchParams?.pid) {
-  //   data = await getPost();
-  // }
 
   return (
     <div>
