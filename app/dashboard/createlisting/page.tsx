@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import FormPost from "./form";
 
 type PageProps = {
-  searchParams?: {
+  searchParams: {
     pid?: string;
   };
 };
@@ -21,7 +21,7 @@ export default function CreateListing({ searchParams }: PageProps) {
       try {
         const res = await fetch(`/api/getPostOne`, {
           method: "POST",
-          body: JSON.stringify({ id: searchParams?.pid }),
+          body: JSON.stringify({ id: searchParams.pid }),
         });
         const dataRaw = await res.json();
 
@@ -43,7 +43,7 @@ export default function CreateListing({ searchParams }: PageProps) {
           <FontAwesomeIcon icon={faCaretLeft} /> Dashboard
         </Link>
         <div className="pt-10 flex justify-start md:justify-center w-full">
-          <FormPost id={searchParams?.pid} data={data} />
+          <FormPost id={searchParams.pid} data={data} />
         </div>
       </section>
     </div>
