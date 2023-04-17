@@ -21,7 +21,7 @@ export default function Navbar() {
                 Buy
               </li>
             </Link>
-            <Link href={"./dashboard"}>
+            <Link href={"./sell"}>
               <li className="hover:text-accentColor transition-all duration-150">
                 Sell
               </li>

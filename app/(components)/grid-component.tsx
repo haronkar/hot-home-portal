@@ -71,5 +71,22 @@ export default function GridComponent({ items }: Props) {
     </Link>
   ));
 
-  return <div className="flex flex-wrap -mx-4 px-10">{gridItems}</div>;
+  // console.log(gridItems);
+
+  return (
+    <div className="flex flex-wrap -mx-4 px-10">
+      {items.length ? (
+        gridItems
+      ) : (
+        <div className="h-[27.5rem] grid place-items-center w-full">
+          <div className=" text-center">
+            <h1 className="text-lg font-semibold">No matching results</h1>
+            <span className="text-sm text-foreground/80">
+              Edit or remove the filters for best results.
+            </span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }

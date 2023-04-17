@@ -31,7 +31,7 @@ export default function CreateListing({ searchParams }: PageProps) {
       }
     };
     fetchData();
-  }, []);
+  }, [searchParams.pid]);
 
   return (
     <div>

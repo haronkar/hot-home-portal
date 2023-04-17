@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}", // Note the addition of the `app` directory.
@@ -16,7 +19,38 @@ module.exports = {
       width: {
         18: "4.5rem",
       },
+      animation: {
+        blink: "blink 1.4s infinite both",
+      },
+      keyframes: {
+        blink: {
+          "0%": {
+            opacity: "0.2",
+          },
+          "20%": {
+            opacity: "1",
+          },
+          "100%": {
+            opacity: " 0.2",
+          },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ matchUtilities, theme }) => {
+      matchUtilities(
+        {
+          "animation-delay": (value) => {
+            return {
+              "animation-delay": value,
+            };
+          },
+        },
+        {
+          values: theme("transitionDelay"),
+        }
+      );
+    }),
+  ],
 };

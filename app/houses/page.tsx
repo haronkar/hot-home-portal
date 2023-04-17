@@ -14,6 +14,7 @@ import GridComponent from "../(components)/grid-component";
 import { storage } from "@/firebase/clientApp";
 import { getDownloadURL, ref } from "firebase/storage";
 import { useRouter } from "next/navigation";
+import Loading from "../(components)/Loading";
 
 type Gallery = {
   id: string;
@@ -33,6 +34,7 @@ export default function Houses({
   const [maxPrice, setMaxPrice] = useState(0);
   const [selectedTypes, setSelectedTypes] = useState<HomeTypeProps[]>([]);
   const [gallery, setGallery] = useState<Gallery[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const cityFilter = searchParams?.city; // or an empty string if no filter
   const bed = ""; // or an empty string if no filter
@@ -59,6 +61,7 @@ export default function Houses({
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const res = await fetch(`/api/getPostAll`);
         const data = await res.json();
 
@@ -74,6 +77,7 @@ export default function Houses({
           });
           setGallery(gallertData);
         }
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -144,7 +148,7 @@ export default function Houses({
         </div>
       </div>
       <div className="w-full overflow-y-auto overflow-x-hidden">
-        <GridComponent items={filteredGallery} />
+        {false ? <Loading /> : <GridComponent items={filteredGallery} />}
         <Footer />
       </div>
     </div>

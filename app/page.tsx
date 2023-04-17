@@ -42,6 +42,7 @@ export default function Home() {
               <Pill
                 className="text-background border border-background text-xs py-1 "
                 text="About us"
+                linkTo="./about"
               />
               <Pill
                 className="text-background border border-background text-xs py-1 "
