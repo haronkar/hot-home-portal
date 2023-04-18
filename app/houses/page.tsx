@@ -42,8 +42,6 @@ export default function Houses({
 
   const router = useRouter();
 
-  // console.log(cityFilter);
-
   const capitalize = (s: string) =>
     s && s[0].toUpperCase() + s.slice(1).toLowerCase() + ", ON";
 
@@ -104,7 +102,7 @@ export default function Houses({
     <div className="w-screen h-screen bg-backroundDark flex flex-col overflow-hidden">
       <div className="pt-12 pb-4 px-10 bg-background shadow-sm flex-initial sticky top-0 z-10">
         <h1 className="mb-4 text-lg font-bold">
-          {filteredGallery.length} Results
+          {filteredGallery.length} Results {cityFilter}
         </h1>
         <div className="flex gap-6 items-center">
           <div className="relative border w-fit border-foreground/20 rounded-2xl px-3">
