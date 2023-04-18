@@ -148,7 +148,7 @@ export default function Houses({
         </div>
       </div>
       <div className="w-full overflow-y-auto overflow-x-hidden">
-        {false ? <Loading /> : <GridComponent items={filteredGallery} />}
+        {loading ? <Loading /> : <GridComponent items={filteredGallery} />}
         <Footer />
       </div>
     </div>
