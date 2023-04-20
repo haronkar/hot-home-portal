@@ -23,7 +23,7 @@ export default function ChatBubble() {
         <FontAwesomeIcon icon={faComment} size={"xl"} />
       </button>
       {showBox && (
-        <div className="absolute  right-0 bottom-20 w-96 h-fit bg-white border border-foreground rounded-lg p-4 shadow-lg">
+        <div className="absolute  right-0 bottom-20 w-96 max-h-96 overflow-scroll h-fit bg-white border border-foreground rounded-lg p-4 shadow-lg">
           {!isAuth ? <Auth setIsAuth={setIsAuth} /> : <Chat room="room1" />}
         </div>
       )}
