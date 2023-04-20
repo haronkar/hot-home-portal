@@ -22,7 +22,7 @@ export const Chat = ({ room }: { room: string }) => {
       try {
         const data = await fetch(`/api/getChat`, { cache: "no-store" });
         const message = await data.json();
-        console.log(message);
+        // console.log(message);
         setMessages(message);
       } catch (err) {
         console.error(err);
@@ -47,24 +47,23 @@ export const Chat = ({ room }: { room: string }) => {
   };
 
   return (
-    <div className="chat-app">
-      <div className="header">
-        <h1>Welcome to: {room.toUpperCase()}</h1>
-      </div>
-      <div className="messages">
+    <div className="">
+      <div className="">
         {messages.map((message) => (
-          <div key={message.id} className="message">
-            <span className="user">{message.data.user}:</span>{" "}
+          <div key={message.id} className="">
+            <span className="font-bold text-sm text-foreground/60 mr-1">
+              {message.data.user}:
+            </span>
             {message.data.text}
           </div>
         ))}
       </div>
-      <form onSubmit={handleSubmit} className="new-message-form">
+      <form onSubmit={handleSubmit} className=" pt-5">
         <input
           type="text"
           value={newMessage}
           onChange={(event) => setNewMessage(event.target.value)}
-          className="new-message-input"
+          className="outline-none"
           placeholder="Type your message here..."
         />
         <button type="submit" className="send-button">

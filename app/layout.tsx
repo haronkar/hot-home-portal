@@ -2,6 +2,7 @@ import "./globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import Navbar from "./(components)/navbar";
+import ChatBubble from "./test/chatBubble";
 config.autoAddCss = false;
 
 export default function RootLayout({
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
+        <ChatBubble />
       </body>
     </html>
   );
