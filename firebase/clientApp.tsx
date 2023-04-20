@@ -1,6 +1,13 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import {
+  collection,
+  getFirestore,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -15,7 +22,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // Initialize Cloud Firestore and get a reference to the service
+const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
+const provider = new GoogleAuthProvider();
 
-export { db, storage };
+const messagesRef = collection(db, "chat");
+
+const queryMessages = query(
+  messagesRef,
+  where("room", "==", "room1"),
+  orderBy("createdAt")
+);
+
+export { db, storage, provider, auth, queryMessages };

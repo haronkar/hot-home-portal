@@ -1,3 +1,5 @@
+"use client";
+import { auth } from "@/firebase/clientApp";
 import {
   faList,
   faHome,
@@ -5,9 +7,17 @@ import {
   faHouseCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { signOut } from "firebase/auth";
 import Link from "next/link";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 export default function Sidebar() {
+  const signUserOut = async () => {
+    await signOut(auth);
+    cookies.remove("auth-token");
+  };
   return (
     <div className="ml-4 py-5 h-full w-full grid grid-rows-4 place-content-center rounded-2xl bg-foreground text-backroundDark">
       <Link
@@ -25,9 +35,11 @@ export default function Sidebar() {
           <span className="hidden md:inline">Listing</span>
         </li>
       </ul>
-      <div className="justify-self-center place-self-end mb-4">
+      <button
+        onClick={signUserOut}
+        className="justify-self-center place-self-end mb-4">
         <FontAwesomeIcon icon={faSignOut} size="xl" />
-      </div>
+      </button>
     </div>
   );
 }

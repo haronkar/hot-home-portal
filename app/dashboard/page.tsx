@@ -1,5 +1,6 @@
 "use client";
 
+import { auth } from "@/firebase/clientApp";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import DashList from "./dashlist";
@@ -24,7 +25,9 @@ export default function dashboard() {
   return (
     <div>
       <h1 className="pl-32 py-6 md:pl-52 text-2xl bg-background">
-        Dashboard : Admin
+        {auth.currentUser
+          ? `Welcome, ${auth.currentUser?.displayName}`
+          : "Welcome"}
       </h1>
       <div className="pl-32 pr-8 md:pl-52 py-4">
         <div className="mt-3 flex justify-between">
