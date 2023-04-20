@@ -33,21 +33,17 @@ export const Chat = ({ room }: { room: string }) => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    try {
-      if (newMessage === "") return;
+    if (newMessage === "") return;
 
-      const data = await fetch(`/api/createChat`, {
-        method: "POST",
-        body: JSON.stringify({
-          text: newMessage,
-          user: auth.currentUser?.displayName,
-          room,
-        }),
-      });
-      setNewMessage("");
-    } catch (err) {
-      console.error(err);
-    }
+    const data = await fetch(`/api/createChat`, {
+      method: "POST",
+      body: JSON.stringify({
+        text: newMessage,
+        user: auth.currentUser?.displayName,
+        room,
+      }),
+    });
+    setNewMessage("");
   };
 
   return (
